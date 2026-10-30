@@ -25,10 +25,11 @@ public class MessageSubscriber {
         messageService.send(email);
     }
 
+    // Formaterar orderbekräftelsen med samma USD-valuta som webbshoppen och Stripe Checkout.
     public String orderToMessage(Order order) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Order date: ").append(order.getOrderDate()).append("\n");
-        stringBuilder.append("Total amount: ").append(order.getTotalPrice()).append(" SEK\n\n");
+        stringBuilder.append("Total amount: ").append(order.getTotalPrice()).append(" USD\n\n");
         stringBuilder.append("Items:\n");
         for (OrderItem item : order.getItems()) {
             stringBuilder.append("- ")
@@ -37,7 +38,7 @@ public class MessageSubscriber {
                     .append(item.getQuantity())
                     .append(" = ")
                     .append(item.getPrice())
-                    .append(" SEK/st\n");
+                    .append(" USD/st\n");
         }
         return stringBuilder.toString();
     }
