@@ -22,14 +22,15 @@ jobs:
           java-version: '17'
           server-id: github
           server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
+          server-password: PACKAGES_TOKEN
 
       - name: Build Project
         run: mvn -B clean package
         env:
-          GITHUB_TOKEN: ${{secrets.PASSWORD}}
+          PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
       - name: Log in to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -38,8 +39,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: true
-          tags: martingruter/email-service-projekt2:1.0.0
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          tags: ynsuldg/microservices-webshop-email-service:1.0.0
 
 
 
