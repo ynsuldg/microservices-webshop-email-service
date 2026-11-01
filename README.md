@@ -48,6 +48,12 @@ Maven-beroendet `spring-messenger:1.0.5` hämtas från GitHub Packages och kan k
 åtkomst via Maven-inställningar. CI använder `PACKAGES_TOKEN` med paketläsbehörighet.
 Lokal port: 8083.
 
+## Statussida
+
+Rotadressen `/` visar tjänstens namn och **Service is running** med samma utseende som övriga backendtjänster.
+Sidan är publik och kontrollerar bara att denna tjänst svarar, inte övriga tjänster eller externa beroenden.
+API:ernas befintliga säkerhetsregler gäller fortfarande.
+
 ## Render
 
 | Tjänst | Render-adress |
@@ -65,7 +71,7 @@ Använd **Web Service → Existing Image**, sätt miljövariablerna i Render och
 Efter en ny image från senaste `main` väljs **Manual Deploy → Deploy latest reference**.
 En äldre Actions-omkörning kan skriva över samma tagg med äldre kod.
 
-Email-service är en meddelandekonsument, inte en användarsida. Render-adressens rot behöver inte visa någon sida.
+Email-service är en meddelandekonsument. Rotadressen visar statussidan; den bekräftar inte att mejl kan skickas.
 Render Free kan ge väntetid när tjänsterna väcks. Se [Render-dokumentationen](https://render.com/docs/deploying-an-image).
 
 **Render Free blockerar utgående SMTP på port 25, 465 och 587.** Att tjänsten är Live innebär därför
